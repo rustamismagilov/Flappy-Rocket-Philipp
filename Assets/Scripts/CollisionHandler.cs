@@ -55,7 +55,7 @@ public class CollisionHandler : MonoBehaviour
 
         int nextSceneIndex = currentSceneIndex + 1;
 
-        if(nextSceneIndex== SceneManager.sceneCountInBuildSettings)
+        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
         {
             nextSceneIndex = 0;
         }

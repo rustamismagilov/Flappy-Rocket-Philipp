@@ -31,26 +31,40 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            fuelController.FuelSystem();
-
-            rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
-
-            if (!audioSource.isPlaying)
+            if (fuelController.currentFuel > 0)
             {
-                audioSource.PlayOneShot(mainEngine);
+                fuelController.ConsumeFuel();
+
+                rb.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
+
+                if (!audioSource.isPlaying)
+                {
+                    audioSource.PlayOneShot(mainEngine);
+                }
+                if (!mainEnginePS.isPlaying)
+                {
+                    mainEnginePS.Play();
+                }
             }
-            if (!mainEnginePS.isPlaying)
+            else
             {
-                mainEnginePS.Play();
+                audioSource.Stop();
+                mainEnginePS.Stop();
+                fuelController.OutOfFuel();
             }
         }
         else
         {
             audioSource.Stop();
             mainEnginePS.Stop();
-            fuelController.OutOfFuel();
+
+            if (fuelController.currentFuel <= 0)
+            {
+                fuelController.OutOfFuel();
+            }
         }
     }
+
 
     void ProcessRotation()
     {
