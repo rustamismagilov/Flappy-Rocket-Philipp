@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField]TextMeshProUGUI timerText;
+    [SerializeField] TextMeshProUGUI timerText;
 
     float timeRunning = 0;
 
     void Update()
     {
         timeRunning += Time.deltaTime;
-        Debug.Log(timeRunning);
+        //Debug.Log(timeRunning);
 
         timerText.text = FormatTime(timeRunning);
     }
@@ -20,6 +20,6 @@ public class Timer : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(time / 60f);
         int seconds = Mathf.FloorToInt(time % 60f);
-        return string.Format("{0:0}:{1:00}" ,minutes,seconds);
+        return string.Format("{0:0}:{1:00}", minutes, seconds);
     }
 }
