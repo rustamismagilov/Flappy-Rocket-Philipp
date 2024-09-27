@@ -634,9 +634,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a96ff266f022914d900c96cf53abd72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentFuel: 10
-  burnRate: 5
-  maxFuel: 10
+  currentFuel: 100
+  burnRate: 10
+  maxFuel: 100
+  fuelToAdd: 20
 --- !u!1 &8972606480291121315
 GameObject:
   m_ObjectHideFlags: 0
