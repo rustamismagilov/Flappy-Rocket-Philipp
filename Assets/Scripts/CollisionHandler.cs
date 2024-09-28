@@ -10,6 +10,12 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip sucess;
     [SerializeField] AudioClip Crash;
 
+    private bool standsOnFinishPlatform = false;
+    private bool levelCompleted = false;
+    float timeOnFinishPlatform = 0;
+    [SerializeField] float requiredTimeOnFinishPlatform = 3f;
+
+
     AudioSource audioSource;
 
     void Start()
@@ -26,8 +32,8 @@ public class CollisionHandler : MonoBehaviour
                 break;
 
             case "Finish":
-                Debug.Log("This is the Finish Platform");
-                StartSucessSequence();
+                Debug.Log("Currently on Finish Platform");
+                standsOnFinishPlatform = true;
                 break;
 
             case "Fuel":
@@ -39,6 +45,27 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("You hit Ground/Obstacle");
                 StartCrashSequence();
                 break;
+        }
+    }
+    private void OnCollisionStay(Collision other)
+    {
+        if (standsOnFinishPlatform && !levelCompleted)
+        {
+            timeOnFinishPlatform += Time.deltaTime;
+
+            if (timeOnFinishPlatform >= requiredTimeOnFinishPlatform)
+            {
+                StartSucessSequence();
+            }
+        }
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.CompareTag("Finish"))
+        {
+            Debug.Log("Left Finish Platform too soon");
+            standsOnFinishPlatform = false;
+            timeOnFinishPlatform = 0;
         }
     }
 
@@ -64,6 +91,9 @@ public class CollisionHandler : MonoBehaviour
 
     void StartSucessSequence()
     {
+        if (levelCompleted) return;
+        levelCompleted = true;
+
         audioSource.PlayOneShot(sucess);
         GetComponent<PlayerController>().enabled = false;
         Invoke("LoadNextLevel", delay);
