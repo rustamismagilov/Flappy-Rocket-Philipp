@@ -7,8 +7,8 @@ public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] float delay = 1f;
 
-    [SerializeField] AudioClip sucess;
-    [SerializeField] AudioClip Crash;
+    [SerializeField] AudioClip success;
+    [SerializeField] AudioClip crash;
 
     private bool standsOnFinishPlatform = false;
     private bool levelCompleted = false;
@@ -21,6 +21,23 @@ public class CollisionHandler : MonoBehaviour
     void Start()
     {
         audioSource = FindObjectOfType<AudioSource>();
+    }
+
+    void Update()
+    {
+        if (standsOnFinishPlatform && !levelCompleted)
+        {
+            timeOnFinishPlatform += Time.deltaTime;
+
+            if (timeOnFinishPlatform >= requiredTimeOnFinishPlatform)
+            {
+                StartSuccessSequence();
+            }
+        }
+        else if (!standsOnFinishPlatform)
+        {
+            timeOnFinishPlatform = 0;
+        }
     }
 
     private void OnCollisionEnter(Collision other)
@@ -47,18 +64,7 @@ public class CollisionHandler : MonoBehaviour
                 break;
         }
     }
-    private void OnCollisionStay(Collision other)
-    {
-        if (standsOnFinishPlatform && !levelCompleted)
-        {
-            timeOnFinishPlatform += Time.deltaTime;
 
-            if (timeOnFinishPlatform >= requiredTimeOnFinishPlatform)
-            {
-                StartSucessSequence();
-            }
-        }
-    }
     private void OnCollisionExit(Collision other)
     {
         if (other.gameObject.CompareTag("Finish"))
@@ -78,30 +84,40 @@ public class CollisionHandler : MonoBehaviour
 
     void LoadNextLevel()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-
-        int nextSceneIndex = currentSceneIndex + 1;
-
-        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        Debug.Log("Load next level");
+        //Counts all the Scenes in the Game
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+        //As soon as you played every Scene...
+        if (totalScenes <= 0)
         {
-            nextSceneIndex = 0;
+            //This Debug.Log will show up...
+            Debug.Log("No more Scenes To Load");
+            //and stops at this point
+            return;
         }
+        //Describes the Scene you currently in
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //adds 1 tho the current Scene.
+        //The % prevents an If statemant and brings you back to the First Scene
+        int nextSceneIndex = (currentSceneIndex + 1) % totalScenes;
+
         SceneManager.LoadScene(nextSceneIndex);
     }
 
-    void StartSucessSequence()
+    void StartSuccessSequence()
     {
         if (levelCompleted) return;
         levelCompleted = true;
 
-        audioSource.PlayOneShot(sucess);
+        Debug.Log("Starting Success Sequence");
+        audioSource.PlayOneShot(success);
         GetComponent<PlayerController>().enabled = false;
         Invoke("LoadNextLevel", delay);
     }
 
     void StartCrashSequence()
     {
-        audioSource.PlayOneShot(Crash);
+        audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
         Invoke("ReloadLevel", delay);
     }

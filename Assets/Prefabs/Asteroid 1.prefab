@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 494976}
   - component: {fileID: 5444550}
   - component: {fileID: 11425652}
-  - component: {fileID: -2672760831355037728}
+  - component: {fileID: -3171618679422232505}
   m_Layer: 0
   m_Name: Asteroid 1
   m_TagString: Enemy
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tumble: 0.25
---- !u!114 &-2672760831355037728
+--- !u!114 &-3171618679422232505
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -315,8 +315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb70a9e78eb5f3f4d83064fc6ec1399f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  distance: 0
+  speed: 1
+  distance: 1
   movementVector: {x: 0, y: 0, z: 0}
 --- !u!1 &176588
 GameObject:
@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 472972}
   - component: {fileID: 3374584}
   - component: {fileID: 2341100}
+  - component: {fileID: 1574145387299903444}
   m_Layer: 0
   m_Name: test_asteroid_LOD2
   m_TagString: Untagged
@@ -401,3 +402,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1574145387299903444
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176588}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: a06b7d8123805974182a9aee714fe013, type: 3}
