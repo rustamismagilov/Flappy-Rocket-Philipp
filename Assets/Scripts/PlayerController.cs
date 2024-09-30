@@ -72,19 +72,19 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyRotation(-rotationThust);
-            Debug.Log("Turn Left");
+            //Debug.Log("Turn Left");
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             ApplyRotation(rotationThust);
-            Debug.Log("Turn Right");
+            //Debug.Log("Turn Right");
         }
     }
 
     void ApplyRotation(float rotationThisFrame)
     {
         rb.freezeRotation = true;
-        transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
+        transform.Rotate(rotationThisFrame * Time.deltaTime * Vector3.forward);
         rb.freezeRotation = false;
     }
 }

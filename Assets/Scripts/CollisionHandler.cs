@@ -21,9 +21,16 @@ public class CollisionHandler : MonoBehaviour
 
     void Start()
     {
-        livesManager = GetComponent<LivesManager>();
-        audioSource = FindObjectOfType<AudioSource>();
+        livesManager = LivesManager.instance;
+        audioSource = GetComponent<AudioSource>();
+
+        // If AudioSource is not on the same GameObject, find it in the scene
+        if (audioSource == null)
+        {
+            audioSource = FindObjectOfType<AudioSource>();
+        }
     }
+
 
     void Update()
     {
@@ -91,7 +98,7 @@ public class CollisionHandler : MonoBehaviour
         int totalScenes = SceneManager.sceneCountInBuildSettings;
         //As soon as you played every Scene...
         if (totalScenes <= 0)
-        {
+        { 
             //This Debug.Log will show up...
             Debug.Log("No more Scenes To Load");
             //and stops at this point
@@ -111,7 +118,7 @@ public class CollisionHandler : MonoBehaviour
         if (levelCompleted) return;
         levelCompleted = true;
 
-        Debug.Log("Starting Success Sequence");
+        //Debug.Log("Starting Success Sequence");
         audioSource.PlayOneShot(success);
         GetComponent<PlayerController>().enabled = false;
         Invoke("LoadNextLevel", delay);
@@ -125,14 +132,16 @@ public class CollisionHandler : MonoBehaviour
 
         if (livesManager.currentLives <= 0)
         {
-            DeathSequence();
+            GameOverSequence();
         }
+
+        Invoke("ReloadLevel", delay);
     }
 
-    void DeathSequence()
+    void GameOverSequence()
     {
         audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
-        Invoke("ReloadLevel", delay);
+        //Invoke("ReloadLevel", delay);
     }
 }

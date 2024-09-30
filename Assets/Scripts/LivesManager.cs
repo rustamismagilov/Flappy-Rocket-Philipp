@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LivesManager : MonoBehaviour
 {
+    public static LivesManager instance;
+
     [Header("Lives Settings")]
     [SerializeField] private int maxLives = 3;
     [SerializeField] public int currentLives;
@@ -13,37 +15,54 @@ public class LivesManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI livesText;
 
-    CollisionHandler collisionHandler;
-    void Start()
+    void Awake()
     {
-        collisionHandler = GetComponent<CollisionHandler>();
-
-        int numLivesManager = FindObjectsOfType<LivesManager>().Length;
-        if (numLivesManager > 1)
+        // Implement Singleton pattern
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            currentLives = maxLives; // Initialize currentLives
+        }
+        else
         {
             Destroy(gameObject);
         }
-
-        //currentLives = maxLives;
-        LivesUI();
-
-        livesText.text = "Lives: " + currentLives;
-
     }
 
-    void Update()
+    void Start()
     {
+        UpdateLivesText();
+    }
 
+    void OnEnable()
+    {
+        // Subscribe to the sceneLoaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        // Unsubscribe from the sceneLoaded event
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reassign the UI elements after the scene loads
+        livesText = GameObject.Find("LivesText").GetComponent<TextMeshProUGUI>();
+        UpdateLivesText();
     }
 
     public void LosingLives()
     {
         currentLives--;
-        LivesUI();
+        UpdateLivesText();
 
         if (currentLives > 0)
         {
-            collisionHandler.ReloadLevel();
+            // Reload the current level
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         else
         {
@@ -51,15 +70,18 @@ public class LivesManager : MonoBehaviour
         }
     }
 
-    void LivesUI()
+    void UpdateLivesText()
     {
-        livesText.text = "Lives: " + currentLives;
+        if (livesText != null)
+        {
+            livesText.text = "Lives: " + currentLives;
+        }
     }
 
     void GameOver()
     {
         Debug.Log("Game Over");
-        SceneManager.LoadScene(0);
-        //currentLives = maxLives;
+        currentLives = maxLives; // Reset lives for a new game
+        SceneManager.LoadScene(0); // Load the first scene or a Game Over scene
     }
 }
