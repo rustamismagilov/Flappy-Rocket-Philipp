@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,8 +13,13 @@ public class LivesManager : MonoBehaviour
     [SerializeField] private int maxLives = 3;
     [SerializeField] public int currentLives;
 
-    [Header("UI Elements")]
+    [Header("UI")]
     [SerializeField] private TextMeshProUGUI livesText;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip crash;
+
+    private float delay = 3f;
 
     void Awake()
     {
@@ -50,6 +56,7 @@ public class LivesManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // Reassign the UI elements after the scene loads
+        // By searching for "LivesText" game object and doing everything through this game object
         livesText = GameObject.Find("LivesText").GetComponent<TextMeshProUGUI>();
         UpdateLivesText();
     }
@@ -59,14 +66,10 @@ public class LivesManager : MonoBehaviour
         currentLives--;
         UpdateLivesText();
 
-        if (currentLives > 0)
+        if (currentLives < 0)
         {
-            // Reload the current level
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        else
-        {
-            GameOver();
+            Invoke(nameof(GameOver), delay);
+            currentLives = maxLives;
         }
     }
 
@@ -78,9 +81,10 @@ public class LivesManager : MonoBehaviour
         }
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        Debug.Log("Game Over");
+        //Debug.Log("Game Over");
+        //GetComponent<PlayerController>().enabled = false;
         currentLives = maxLives; // Reset lives for a new game
         SceneManager.LoadScene(0); // Load the first scene or a Game Over scene
     }

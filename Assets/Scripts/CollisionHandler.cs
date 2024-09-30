@@ -12,6 +12,7 @@ public class CollisionHandler : MonoBehaviour
 
     private bool standsOnFinishPlatform = false;
     private bool levelCompleted = false;
+    private bool crashDetected = false;
     float timeOnFinishPlatform = 0;
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
 
@@ -22,7 +23,6 @@ public class CollisionHandler : MonoBehaviour
     void Start()
     {
         livesManager = LivesManager.instance;
-        audioSource = GetComponent<AudioSource>();
 
         // If AudioSource is not on the same GameObject, find it in the scene
         if (audioSource == null)
@@ -51,24 +51,26 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if (levelCompleted || crashDetected) return;
+
         switch (other.gameObject.tag)
         {
             case "Start":
-                Debug.Log("This is the Start Platform");
+                //Debug.Log("This is the Start Platform");
                 break;
 
             case "Finish":
-                Debug.Log("Currently on Finish Platform");
+                //Debug.Log("Currently on Finish Platform");
                 standsOnFinishPlatform = true;
                 break;
 
             case "Fuel":
-                Debug.Log("Fuel Collected");
+                //Debug.Log("Fuel Collected");
                 Destroy(other.gameObject);
                 break;
 
             default:
-                Debug.Log("You hit Ground/Obstacle");
+                //Debug.Log("You hit Ground/Obstacle");
                 StartCrashSequence();
                 break;
         }
@@ -93,14 +95,14 @@ public class CollisionHandler : MonoBehaviour
 
     void LoadNextLevel()
     {
-        Debug.Log("Load next level");
+        //Debug.Log("Load next level");
         //Counts all the Scenes in the Game
         int totalScenes = SceneManager.sceneCountInBuildSettings;
         //As soon as you played every Scene...
         if (totalScenes <= 0)
-        { 
+        {
             //This Debug.Log will show up...
-            Debug.Log("No more Scenes To Load");
+            //Debug.Log("No more Scenes To Load");
             //and stops at this point
             return;
         }
@@ -121,27 +123,24 @@ public class CollisionHandler : MonoBehaviour
         //Debug.Log("Starting Success Sequence");
         audioSource.PlayOneShot(success);
         GetComponent<PlayerController>().enabled = false;
-        Invoke("LoadNextLevel", delay);
+        Invoke(nameof(LoadNextLevel), delay);
     }
 
     void StartCrashSequence()
     {
         audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
+
+        if (crashDetected) return;
+        crashDetected = true;
+        
         livesManager.LosingLives();
 
         if (livesManager.currentLives <= 0)
         {
-            GameOverSequence();
+            LivesManager.instance.GameOver();
         }
 
-        Invoke("ReloadLevel", delay);
-    }
-
-    void GameOverSequence()
-    {
-        audioSource.PlayOneShot(crash);
-        GetComponent<PlayerController>().enabled = false;
-        //Invoke("ReloadLevel", delay);
+        Invoke(nameof(ReloadLevel), delay);
     }
 }
