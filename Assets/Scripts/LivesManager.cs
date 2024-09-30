@@ -8,7 +8,7 @@ public class LivesManager : MonoBehaviour
 {
     [Header("Lives Settings")]
     [SerializeField] private int maxLives = 3;
-    [SerializeField] private int currentLives;
+    [SerializeField] public int currentLives;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI livesText;
@@ -16,7 +16,7 @@ public class LivesManager : MonoBehaviour
     CollisionHandler collisionHandler;
     void Start()
     {
-        collisionHandler.GetComponent<CollisionHandler>();
+        collisionHandler = GetComponent<CollisionHandler>();
 
         int numLivesManager = FindObjectsOfType<LivesManager>().Length;
         if (numLivesManager > 1)
@@ -24,16 +24,19 @@ public class LivesManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        currentLives = maxLives;
+        //currentLives = maxLives;
         LivesUI();
+
+        livesText.text = "Lives: " + currentLives;
+
     }
 
     void Update()
     {
-        
+
     }
 
-    void LosingLives()
+    public void LosingLives()
     {
         currentLives--;
         LivesUI();
@@ -57,6 +60,6 @@ public class LivesManager : MonoBehaviour
     {
         Debug.Log("Game Over");
         SceneManager.LoadScene(0);
-        currentLives = maxLives;
+        //currentLives = maxLives;
     }
 }

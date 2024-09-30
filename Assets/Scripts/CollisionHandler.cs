@@ -15,11 +15,13 @@ public class CollisionHandler : MonoBehaviour
     float timeOnFinishPlatform = 0;
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
 
+    LivesManager livesManager;
 
     AudioSource audioSource;
 
     void Start()
     {
+        livesManager = GetComponent<LivesManager>();
         audioSource = FindObjectOfType<AudioSource>();
     }
 
@@ -116,6 +118,18 @@ public class CollisionHandler : MonoBehaviour
     }
 
     void StartCrashSequence()
+    {
+        audioSource.PlayOneShot(crash);
+        GetComponent<PlayerController>().enabled = false;
+        livesManager.LosingLives();
+
+        if (livesManager.currentLives <= 0)
+        {
+            DeathSequence();
+        }
+    }
+
+    void DeathSequence()
     {
         audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
