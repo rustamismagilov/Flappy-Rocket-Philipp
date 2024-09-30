@@ -75,7 +75,7 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    void ReloadLevel()
+    public void ReloadLevel()
     {
         string sceneName = SceneManager.GetActiveScene().name;
 

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Start
   - Fuel
+  - Enemy
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
