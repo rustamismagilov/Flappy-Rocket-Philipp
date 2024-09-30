@@ -8,6 +8,8 @@ TagManager:
   - Fuel
   - Enemy
   - Checkpoint
+  - Asteroid
+  - Powerup
   layers:
   - Default
   - TransparentFX

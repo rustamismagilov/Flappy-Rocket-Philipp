@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 8356820246340337400}
   - component: {fileID: 2169716400956393492}
   m_Layer: 0
-  m_Name: Refill
-  m_TagString: Fuel
+  m_Name: Powerup
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3.99, z: 2.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.140717, y: 2.140717, z: 2.140717}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d945f46fe0a1dc949a3d77c1c22fba60, type: 2}
+  - {fileID: 2100000, guid: 056f8a61ad787ff4981b810dabe72f51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
