@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (rb.isKinematic && Input.anyKey)
+        {
+            rb.isKinematic = false;
+        }
+
         ProcessRotation();
         ProcessThrust();
     }
@@ -65,19 +70,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyRotation(-rotationThust);
-            Debug.Log("Turn Left");
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             ApplyRotation(rotationThust);
-            Debug.Log("Turn Right");
         }
     }
 
