@@ -44,21 +44,17 @@ public class CollisionHandler : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Start":
-                // Debug.Log("This is the Start Platform");
                 break;
 
             case "Finish":
-                // Debug.Log("Currently on Finish Platform");
                 standsOnFinishPlatform = true;
                 break;
 
             case "Fuel":
-                // Debug.Log("Fuel Collected");
                 Destroy(other.gameObject);
                 break;
 
             default:
-                // Debug.Log("You hit Ground/Obstacle");
                 StartCrashSequence();
                 break;
         }
@@ -100,6 +96,13 @@ public class CollisionHandler : MonoBehaviour
 
         CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
         checkpointSystem.RespawnPlayer();
+
+        // Set Rigidbody to isKinematic = true AFTER respawning
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
     }
 
     void LoadNextLevel()

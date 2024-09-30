@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FuelController : MonoBehaviour
 {
@@ -11,11 +12,18 @@ public class FuelController : MonoBehaviour
     [SerializeField] float burnRate = 0.05f;
     [SerializeField] float maxFuel = 10f;
     [SerializeField] float fuelToAdd = 20f; // Amount of fuel to add when colliding with a fuel pickup
+    [SerializeField] private Slider fuelSlider;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerController>();
         currentFuel = maxFuel; // Initialize current fuel to the maximum at the start
+        fuelSlider.maxValue = maxFuel;
+    }
+
+    void Update()
+    {
+        fuelSlider.value = currentFuel;
     }
 
     public void ConsumeFuel()

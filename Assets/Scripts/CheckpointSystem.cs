@@ -5,8 +5,7 @@ using UnityEngine;
 public class CheckpointSystem : MonoBehaviour
 {
     [Header("Checkpoint Settings")]
-    public Transform[] checkpoints;
-    public Vector3 spawnOffset;
+    public Checkpoint[] checkpoints;
 
     private int currentCheckpointIndex = -1;
     private GameObject player;
@@ -31,7 +30,8 @@ public class CheckpointSystem : MonoBehaviour
     {
         if (currentCheckpointIndex >= 0 && currentCheckpointIndex < checkpoints.Length)
         {
-            Vector3 spawnPosition = checkpoints[currentCheckpointIndex].position + spawnOffset;
+            Vector3 spawnPosition = checkpoints[currentCheckpointIndex].transform.position
+                                    + checkpoints[currentCheckpointIndex].spawnOffset;
 
             player.transform.position = spawnPosition;
             player.transform.rotation = Quaternion.Euler(0, 90, 0);
@@ -44,5 +44,4 @@ public class CheckpointSystem : MonoBehaviour
             Debug.LogWarning("Invalid checkpoint index! Cannot respawn player.");
         }
     }
-
 }
