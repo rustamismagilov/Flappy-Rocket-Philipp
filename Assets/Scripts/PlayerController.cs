@@ -25,7 +25,15 @@ public class PlayerController : MonoBehaviour
     {
         ProcessRotation();
         ProcessThrust();
+
+        /* // Temporary respawn test
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
+            checkpointSystem.RespawnPlayer();
+        } */
     }
+
 
     void ProcessThrust()
     {
@@ -65,19 +73,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     void ProcessRotation()
     {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyRotation(-rotationThust);
-            Debug.Log("Turn Left");
+            //Debug.Log("Turn Left");
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             ApplyRotation(rotationThust);
-            Debug.Log("Turn Right");
+            //Debug.Log("Turn Right");
         }
     }
 

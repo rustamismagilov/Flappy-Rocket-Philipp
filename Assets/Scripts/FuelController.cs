@@ -22,13 +22,13 @@ public class FuelController : MonoBehaviour
     {
         currentFuel -= burnRate * Time.deltaTime;
         currentFuel = Mathf.Clamp(currentFuel, 0f, maxFuel); // Clamp to ensure it doesn't go below 0
-        Debug.Log(currentFuel);
+        //Debug.Log(currentFuel);
     }
 
     public void OutOfFuel()
     {
         player.enabled = false;
-        Debug.Log("Out of fuel");
+        //Debug.Log("Out of fuel");
         // add all other things related to crash sequence here
 
 

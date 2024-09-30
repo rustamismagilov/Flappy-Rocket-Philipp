@@ -15,7 +15,6 @@ public class CollisionHandler : MonoBehaviour
     float timeOnFinishPlatform = 0;
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
 
-
     AudioSource audioSource;
 
     void Start()
@@ -45,21 +44,21 @@ public class CollisionHandler : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Start":
-                Debug.Log("This is the Start Platform");
+                // Debug.Log("This is the Start Platform");
                 break;
 
             case "Finish":
-                Debug.Log("Currently on Finish Platform");
+                // Debug.Log("Currently on Finish Platform");
                 standsOnFinishPlatform = true;
                 break;
 
             case "Fuel":
-                Debug.Log("Fuel Collected");
+                // Debug.Log("Fuel Collected");
                 Destroy(other.gameObject);
                 break;
 
             default:
-                Debug.Log("You hit Ground/Obstacle");
+                // Debug.Log("You hit Ground/Obstacle");
                 StartCrashSequence();
                 break;
         }
@@ -73,35 +72,6 @@ public class CollisionHandler : MonoBehaviour
             standsOnFinishPlatform = false;
             timeOnFinishPlatform = 0;
         }
-    }
-
-    void ReloadLevel()
-    {
-        string sceneName = SceneManager.GetActiveScene().name;
-
-        SceneManager.LoadScene(sceneName);
-    }
-
-    void LoadNextLevel()
-    {
-        Debug.Log("Load next level");
-        //Counts all the Scenes in the Game
-        int totalScenes = SceneManager.sceneCountInBuildSettings;
-        //As soon as you played every Scene...
-        if (totalScenes <= 0)
-        {
-            //This Debug.Log will show up...
-            Debug.Log("No more Scenes To Load");
-            //and stops at this point
-            return;
-        }
-        //Describes the Scene you currently in
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        //adds 1 tho the current Scene.
-        //The % prevents an If statemant and brings you back to the First Scene
-        int nextSceneIndex = (currentSceneIndex + 1) % totalScenes;
-
-        SceneManager.LoadScene(nextSceneIndex);
     }
 
     void StartSuccessSequence()
@@ -119,6 +89,31 @@ public class CollisionHandler : MonoBehaviour
     {
         audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
-        Invoke("ReloadLevel", delay);
+
+        // Call Respawn after delay
+        Invoke("Respawn", delay);
+    }
+
+    void Respawn()
+    {
+        GetComponent<PlayerController>().enabled = true;
+
+        CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
+        checkpointSystem.RespawnPlayer();
+    }
+
+    void LoadNextLevel()
+    {
+        Debug.Log("Load next level");
+        int totalScenes = SceneManager.sceneCountInBuildSettings;
+        if (totalScenes <= 0)
+        {
+            Debug.Log("No more Scenes To Load");
+            return;
+        }
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        int nextSceneIndex = (currentSceneIndex + 1) % totalScenes;
+
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }
