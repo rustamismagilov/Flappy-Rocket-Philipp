@@ -128,19 +128,35 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
+        if (crashDetected) return;
+        crashDetected = true;
+
+        PlayerController playerController = FindObjectOfType<PlayerController>();
+
+        //Debug.Log("Game Over");
+
+        if (playerController != null)
+        {
+            // Disable player controls
+            playerController.enabled = false;
+
+            // Stop all player particle systems
+            playerController.StopAllParticles();
+
+            // Stop all player audio clips
+            playerController.StopAllAudio();
+        }
+
         audioSource.PlayOneShot(crash);
         GetComponent<PlayerController>().enabled = false;
 
-        if (crashDetected) return;
-        crashDetected = true;
-        
         livesManager.LosingLives();
 
-        if (livesManager.currentLives <= 0)
+        if (livesManager.currentLives > 0)
         {
-            LivesManager.instance.GameOver();
+            Invoke(nameof(ReloadLevel), delay);
         }
-
-        Invoke(nameof(ReloadLevel), delay);
+        // Do not reload the level if lives are zero; GameOver() will handle it
     }
+
 }

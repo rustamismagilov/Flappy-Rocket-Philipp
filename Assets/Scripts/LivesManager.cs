@@ -11,13 +11,10 @@ public class LivesManager : MonoBehaviour
 
     [Header("Lives Settings")]
     [SerializeField] private int maxLives = 3;
-    [SerializeField] public int currentLives;
+    [HideInInspector] public int currentLives;
 
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI livesText;
-
-    [Header("Audio")]
-    [SerializeField] AudioClip crash;
+    private TextMeshProUGUI livesText;
 
     private float delay = 3f;
 
@@ -64,14 +61,16 @@ public class LivesManager : MonoBehaviour
     public void LosingLives()
     {
         currentLives--;
+        currentLives = Mathf.Max(0, currentLives);
+
         UpdateLivesText();
 
-        if (currentLives < 0)
+        if (currentLives <= 0)
         {
             Invoke(nameof(GameOver), delay);
-            currentLives = maxLives;
         }
     }
+
 
     void UpdateLivesText()
     {
@@ -83,9 +82,8 @@ public class LivesManager : MonoBehaviour
 
     public void GameOver()
     {
-        //Debug.Log("Game Over");
-        //GetComponent<PlayerController>().enabled = false;
         currentLives = maxLives; // Reset lives for a new game
+        UpdateLivesText();
         SceneManager.LoadScene(0); // Load the first scene or a Game Over scene
     }
 }

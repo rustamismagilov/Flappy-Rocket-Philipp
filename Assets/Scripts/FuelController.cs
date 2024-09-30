@@ -7,7 +7,7 @@ public class FuelController : MonoBehaviour
 {
     PlayerController player;
 
-    [SerializeField] public float currentFuel = 10f;
+    [HideInInspector] public float currentFuel = 10f;
 
     [SerializeField] float burnRate = 0.05f;
     [SerializeField] float maxFuel = 10f;
