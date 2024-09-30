@@ -1336,40 +1336,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7066084349783187753, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7066084349783187753, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079878279359667628, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079878279359667628, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7079878279359667628, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
     - target: {fileID: 7574674473092537045, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
         type: 3}
       propertyPath: m_Name
       value: Canvas Game
-      objectReference: {fileID: 0}
-    - target: {fileID: 7574674473092537045, guid: 28fb123e489bc1b4b87fe6414d7b5aa9,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1434,21 +1404,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4192252365014301048, guid: 6ace0503f5f5e6e44831975f9aeed05d,
-        type: 3}
-      propertyPath: crash
-      value: 
-      objectReference: {fileID: 8300000, guid: f139ee9ad539b2a4a8653a56bc98366a, type: 3}
-    - target: {fileID: 4192252365014301048, guid: 6ace0503f5f5e6e44831975f9aeed05d,
-        type: 3}
-      propertyPath: success
-      value: 
-      objectReference: {fileID: 8300000, guid: 87da799a1582c8e448323e3449987623, type: 3}
-    - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
-        type: 3}
-      propertyPath: burnRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
         type: 3}
       propertyPath: fuelSlider
@@ -1457,11 +1412,6 @@ PrefabInstance:
     - target: {fileID: 8854619882081110099, guid: 6ace0503f5f5e6e44831975f9aeed05d,
         type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8854619882081110099, guid: 6ace0503f5f5e6e44831975f9aeed05d,
-        type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
