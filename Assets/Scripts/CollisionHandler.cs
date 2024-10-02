@@ -81,7 +81,8 @@ public class CollisionHandler : MonoBehaviour
                 ActivateInvincibility();
                 Destroy(other.gameObject);
                 break;
-            case "Asteroids":
+
+            case "Asteroid":
                 if (isInvincible)
                 {
                     Debug.Log("Is Invincible");
