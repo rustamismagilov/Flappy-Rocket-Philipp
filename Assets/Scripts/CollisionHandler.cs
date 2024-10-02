@@ -9,28 +9,37 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField] AudioClip success;
     [SerializeField] AudioClip crash;
+    //Sound when PowerUp is Collected
+    [SerializeField] AudioClip powerUpSound;
+
+    [Header("Invincibility")]
+    //Duration for how long invincibility lasts
+    [SerializeField] float invincibilityDuration = 10;
 
     private bool standsOnFinishPlatform = false;
     private bool levelCompleted = false;
     private bool crashDetected = false;
+    private bool isInvincible = false;
+    private bool hasPowerUp = false;
     float timeOnFinishPlatform = 0;
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
 
+
     LivesManager livesManager;
+    Renderer playerRenderer;
     AudioSource audioSource;
-    Powerup powerup;
 
     void Start()
     {
         livesManager = LivesManager.instance;
 
+        // If AudioSource is not on the same GameObject, find it in the scene
         if (audioSource == null)
         {
             audioSource = FindObjectOfType<AudioSource>();
         }
-
-        powerup = FindObjectOfType<Powerup>();
     }
+
 
     void Update()
     {
@@ -56,19 +65,32 @@ public class CollisionHandler : MonoBehaviour
         switch (other.gameObject.tag)
         {
             case "Start":
-                Debug.Log("Start platform");
+                //Debug.Log("This is the Start Platform");
                 break;
 
             case "Finish":
+                //Debug.Log("Currently on Finish Platform");
                 standsOnFinishPlatform = true;
                 break;
 
             case "Fuel":
+                //Debug.Log("Fuel Collected");
                 Destroy(other.gameObject);
                 break;
-
-            default:
-                StartCrashSequence();
+            case "Powerup":
+                ActivateInvincibility();
+                Destroy(other.gameObject);
+                break;
+            case "Asteroids":
+                if (isInvincible)
+                {
+                    Debug.Log("Is Invincible");
+                    DestroyAsteroid(other.gameObject);
+                }
+                else
+                {
+                    StartCrashSequence();
+                }
                 break;
         }
     }
@@ -77,6 +99,7 @@ public class CollisionHandler : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {
+            Debug.Log("Left Finish Platform too soon");
             standsOnFinishPlatform = false;
             timeOnFinishPlatform = 0;
         }
@@ -85,18 +108,48 @@ public class CollisionHandler : MonoBehaviour
     public void ReloadLevel()
     {
         string sceneName = SceneManager.GetActiveScene().name;
+
         SceneManager.LoadScene(sceneName);
     }
 
     void LoadNextLevel()
     {
+        //Debug.Log("Load next level");
+        //Counts all the Scenes in the Game
         int totalScenes = SceneManager.sceneCountInBuildSettings;
-        if (totalScenes <= 0) return;
-
+        //As soon as you played every Scene...
+        if (totalScenes <= 0)
+        {
+            //This Debug.Log will show up...
+            //Debug.Log("No more Scenes To Load");
+            //and stops at this point
+            return;
+        }
+        //Describes the Scene you currently in
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //adds 1 tho the current Scene.
+        //The % prevents an If statemant and brings you back to the First Scene
         int nextSceneIndex = (currentSceneIndex + 1) % totalScenes;
 
         SceneManager.LoadScene(nextSceneIndex);
+    }
+
+    void ActivateInvincibility()
+    {
+        if (!isInvincible)
+        {
+            StartCoroutine(Invincibility());
+        }
+    }
+
+    IEnumerator Invincibility()
+    {
+        isInvincible = true;
+
+        Debug.Log("Invincibility Activated");
+        yield return new WaitForSeconds(10);
+        isInvincible = false;
+        Debug.Log("Invincibility has ended");
     }
 
     void StartSuccessSequence()
@@ -104,6 +157,7 @@ public class CollisionHandler : MonoBehaviour
         if (levelCompleted) return;
         levelCompleted = true;
 
+        //Debug.Log("Starting Success Sequence");
         audioSource.PlayOneShot(success);
         GetComponent<PlayerController>().enabled = false;
         Invoke(nameof(LoadNextLevel), delay);
@@ -116,10 +170,17 @@ public class CollisionHandler : MonoBehaviour
 
         PlayerController playerController = FindObjectOfType<PlayerController>();
 
+        //Debug.Log("Game Over");
+
         if (playerController != null)
         {
+            // Disable player controls
             playerController.enabled = false;
+
+            // Stop all player particle systems
             playerController.StopAllParticles();
+
+            // Stop all player audio clips
             playerController.StopAllAudio();
         }
 
@@ -132,5 +193,10 @@ public class CollisionHandler : MonoBehaviour
         {
             Invoke(nameof(ReloadLevel), delay);
         }
+        // Do not reload the level if lives are zero; GameOver() will handle it
+    }
+    void DestroyAsteroid(GameObject asteroid)
+    {
+        Destroy(asteroid);
     }
 }
