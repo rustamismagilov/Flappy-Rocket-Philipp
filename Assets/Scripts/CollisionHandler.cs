@@ -117,18 +117,22 @@ public class CollisionHandler : MonoBehaviour
 
     void Respawn()
     {
+        Debug.Log("Respawn method called.");
+
+        crashDetected = false;
+
         GetComponent<PlayerController>().enabled = true;
+
         CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
         checkpointSystem.RespawnPlayer();
 
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true;
+            rb.isKinematic = true;  // Player will stay kinematic until input is given
             Debug.Log("Rigidbody set to kinematic.");
         }
     }
-
 
     void LoadNextLevel()
     {
@@ -201,6 +205,10 @@ public class CollisionHandler : MonoBehaviour
         livesManager.LosingLives();
 
         if (livesManager.currentLives > 0)
+        {
+            Invoke(nameof(Respawn), delay);  // Change from ReloadLevel to Respawn
+        }
+        else
         {
             Invoke(nameof(ReloadLevel), delay);
         }
