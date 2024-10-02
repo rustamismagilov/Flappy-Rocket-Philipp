@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             ApplyRotation(-rotationThust);
+
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
@@ -85,7 +86,24 @@ public class PlayerController : MonoBehaviour
     void ApplyRotation(float rotationThisFrame)
     {
         rb.freezeRotation = true;
-        transform.Rotate(Vector3.forward * rotationThisFrame * Time.deltaTime);
+        transform.Rotate(rotationThisFrame * Time.deltaTime * Vector3.forward);
         rb.freezeRotation = false;
+    }
+
+    public void StopAllParticles()
+    {
+        // Stops the main engine particle system
+        if (mainEnginePS.isPlaying)
+        {
+            mainEnginePS.Stop();
+        }
+    }
+
+    public void StopAllAudio()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }

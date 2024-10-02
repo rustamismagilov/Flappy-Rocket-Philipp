@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Scripts/Checkpoint.cs.meta
-guid: 74fa42b90852a9e4eab4ee8bf7999b9d
-========
-guid: a84bddbc6a50e6f4ba9783da19132c56
->>>>>>>> test-branch:Assets/Scripts/FPSLimit.cs.meta
+guid: 660bb3d49c1c7ac4d8956932cb6f9575
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
