@@ -63,6 +63,8 @@ public class LivesManager : MonoBehaviour
         currentLives--;
         currentLives = Mathf.Max(0, currentLives);
 
+        Debug.Log("Lives remaining: " + currentLives);
+
         UpdateLivesText();
 
         if (currentLives <= 0)

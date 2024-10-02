@@ -14,16 +14,15 @@ public class CollisionHandler : MonoBehaviour
 
     [Header("Invincibility")]
     //Duration for how long invincibility lasts
-    [SerializeField] float invincibilityDuration = 10;
+    //[SerializeField] float invincibilityDuration = 10;
 
     private bool standsOnFinishPlatform = false;
     private bool levelCompleted = false;
     private bool crashDetected = false;
     private bool isInvincible = false;
-    private bool hasPowerUp = false;
+
     float timeOnFinishPlatform = 0;
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
-
 
     LivesManager livesManager;
     Renderer playerRenderer;
@@ -39,7 +38,6 @@ public class CollisionHandler : MonoBehaviour
             audioSource = FindObjectOfType<AudioSource>();
         }
     }
-
 
     void Update()
     {
@@ -117,6 +115,21 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    void Respawn()
+    {
+        GetComponent<PlayerController>().enabled = true;
+        CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
+        checkpointSystem.RespawnPlayer();
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+            Debug.Log("Rigidbody set to kinematic.");
+        }
+    }
+
+
     void LoadNextLevel()
     {
         //Debug.Log("Load next level");
@@ -170,22 +183,15 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCrashSequence()
     {
+        Debug.Log("Crash detected.");
         if (crashDetected) return;
         crashDetected = true;
 
         PlayerController playerController = FindObjectOfType<PlayerController>();
-
-        //Debug.Log("Game Over");
-
         if (playerController != null)
         {
-            // Disable player controls
             playerController.enabled = false;
-
-            // Stop all player particle systems
             playerController.StopAllParticles();
-
-            // Stop all player audio clips
             playerController.StopAllAudio();
         }
 
@@ -198,8 +204,8 @@ public class CollisionHandler : MonoBehaviour
         {
             Invoke(nameof(ReloadLevel), delay);
         }
-        // Do not reload the level if lives are zero; GameOver() will handle it
     }
+
     void DestroyAsteroid(GameObject asteroid)
     {
         Destroy(asteroid);

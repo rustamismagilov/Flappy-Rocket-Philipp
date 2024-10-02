@@ -15,7 +15,9 @@ public class Checkpoint : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered checkpoint " + checkpointIndex);
             checkpointSystem.UpdateCheckpointIndex(checkpointIndex);
         }
     }
+
 }

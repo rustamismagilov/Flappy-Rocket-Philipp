@@ -32,12 +32,11 @@ public class CheckpointSystem : MonoBehaviour
         {
             Vector3 spawnPosition = checkpoints[currentCheckpointIndex].transform.position
                                     + checkpoints[currentCheckpointIndex].spawnOffset;
-
-            player.transform.position = spawnPosition;
-            player.transform.rotation = Quaternion.Euler(0, 90, 0);
-
+            player.transform.SetPositionAndRotation(spawnPosition, Quaternion.Euler(0, 90, 0));
             playerRb.velocity = Vector3.zero;
             playerRb.angularVelocity = Vector3.zero;
+
+            Debug.Log("Player respawned at checkpoint " + currentCheckpointIndex);
         }
         else
         {

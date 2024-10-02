@@ -512,7 +512,6 @@ GameObject:
   - component: {fileID: 8692918309124377948}
   - component: {fileID: 4192252365014301048}
   - component: {fileID: 8506772737071590961}
-  - component: {fileID: 5023551640456619873}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -624,6 +623,8 @@ MonoBehaviour:
   delay: 3
   success: {fileID: 8300000, guid: 87da799a1582c8e448323e3449987623, type: 3}
   crash: {fileID: 8300000, guid: f139ee9ad539b2a4a8653a56bc98366a, type: 3}
+  powerUpSound: {fileID: 0}
+  invincibilityDuration: 10
   requiredTimeOnFinishPlatform: 3
 --- !u!114 &8506772737071590961
 MonoBehaviour:
@@ -640,27 +641,8 @@ MonoBehaviour:
   currentFuel: 10
   burnRate: 1
   maxFuel: 10
-  addFuel: 20
+  fuelToAdd: 20
   fuelSlider: {fileID: 0}
---- !u!114 &5023551640456619873
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8854619882081110099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11ddd5501598e7d47830d11a86138d06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  asteroidDestroyPS: {fileID: 2079900402450079804}
-  asteroidDestroySound: {fileID: 8300000, guid: eaec4a8193252e64cb3f37632dcc9c73,
-    type: 3}
-  powerupPickupSound: {fileID: 8300000, guid: 175584d0aa4e22b46b2a3d610cf8a28b, type: 3}
-  powerupEndSound: {fileID: 8300000, guid: 1dcd67b2ba12cba42b496e90cc7fb735, type: 3}
-  powerupDuration: 10
-  invincibilityDuration: 11
 --- !u!1 &8972606480291121315
 GameObject:
   m_ObjectHideFlags: 0
@@ -953,12 +935,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab79a37535b979f48b6de56e3a0a5cb0, type: 3}
---- !u!198 &2079900402450079804 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198204746014789312, guid: ab79a37535b979f48b6de56e3a0a5cb0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2169996491760381692}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2166973702528868838 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4436899185823514, guid: ab79a37535b979f48b6de56e3a0a5cb0,

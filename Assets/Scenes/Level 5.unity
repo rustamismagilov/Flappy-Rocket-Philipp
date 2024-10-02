@@ -686,7 +686,6 @@ GameObject:
   - component: {fileID: 1281150737}
   - component: {fileID: 1281150738}
   - component: {fileID: 1281150739}
-  - component: {fileID: 1281150740}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -943,18 +942,6 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1281150740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281150733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a84bddbc6a50e6f4ba9783da19132c56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1315683167
 GameObject:
   m_ObjectHideFlags: 3
@@ -1178,6 +1165,21 @@ PrefabInstance:
         type: 3}
       propertyPath: invincibilityDuration
       value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
+        type: 3}
+      propertyPath: maxFuel
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
+        type: 3}
+      propertyPath: burnRate
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
+        type: 3}
+      propertyPath: fuelToAdd
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8506772737071590961, guid: 6ace0503f5f5e6e44831975f9aeed05d,
         type: 3}
