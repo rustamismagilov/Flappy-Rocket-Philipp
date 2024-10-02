@@ -93,6 +93,10 @@ public class CollisionHandler : MonoBehaviour
                     StartCrashSequence();
                 }
                 break;
+
+            default:
+                StartCrashSequence();
+                break;
         }
     }
 
