@@ -36,10 +36,7 @@ public class FuelController : MonoBehaviour
     public void OutOfFuel()
     {
         player.enabled = false;
-        //Debug.Log("Out of fuel");
         // add all other things related to crash sequence here
-
-
 
         //Time.timeScale = 0;
     }

@@ -16,10 +16,12 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float requiredTimeOnFinishPlatform = 3f;
 
     AudioSource audioSource;
+    PlayerController playerController;
 
     void Start()
     {
-        audioSource = FindObjectOfType<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        playerController = GetComponent<PlayerController>();
     }
 
     void Update()
@@ -77,14 +79,14 @@ public class CollisionHandler : MonoBehaviour
 
         Debug.Log("Starting Success Sequence");
         audioSource.PlayOneShot(success);
-        GetComponent<PlayerController>().enabled = false;
+        playerController.enabled = false;
         Invoke("LoadNextLevel", delay);
     }
 
     void StartCrashSequence()
     {
         audioSource.PlayOneShot(crash);
-        GetComponent<PlayerController>().enabled = false;
+        playerController.enabled = false;
 
         // Call Respawn after delay
         Invoke("Respawn", delay);
@@ -92,9 +94,14 @@ public class CollisionHandler : MonoBehaviour
 
     void Respawn()
     {
-        GetComponent<PlayerController>().enabled = true;
+        playerController.enabled = true;
 
         CheckpointSystem checkpointSystem = FindObjectOfType<CheckpointSystem>();
+        if (checkpointSystem == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            return;
+        }
         checkpointSystem.RespawnPlayer();
 
         // Set Rigidbody to isKinematic = true AFTER respawning

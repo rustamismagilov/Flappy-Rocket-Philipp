@@ -31,7 +31,7 @@ public class CheckpointSystem : MonoBehaviour
         if (currentCheckpointIndex >= 0 && currentCheckpointIndex < checkpoints.Length)
         {
             Vector3 spawnPosition = checkpoints[currentCheckpointIndex].transform.position
-                                    + checkpoints[currentCheckpointIndex].spawnOffset;
+                + checkpoints[currentCheckpointIndex].spawnOffset;
 
             player.transform.position = spawnPosition;
             player.transform.rotation = Quaternion.Euler(0, 90, 0);
