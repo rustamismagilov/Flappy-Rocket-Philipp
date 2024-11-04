@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        audioSource = FindAnyObjectByType<AudioSource>();
-        fuelController = FindAnyObjectByType<FuelController>();
+        audioSource = GetComponent<AudioSource>();
+        fuelController = GetComponent<FuelController>();
     }
 
     void Update()
